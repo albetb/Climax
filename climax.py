@@ -22,7 +22,7 @@ DHT_PIN  = 24
 SOIL_PIN = 23
 
 # Setup GPIO pin as input
-GPIO.setmode(GPIO.BOARD)  
+GPIO.setmode(GPIO.BCM)  
 GPIO.setup(SOIL_PIN, GPIO.IN)
 
 # Here insert the name of the json file google sent to you (DONT rename)
@@ -55,11 +55,11 @@ while True:
         worksheet = login_open_sheet(GDOCS_OAUTH_JSON, GDOCS_SPREADSHEET_NAME)
 
     if GPIO.input(SOIL_PIN):
+	print('Soil DRY')
+	soil = 'DRY'
+    else:
 	print('Soil wet')
 	soil = 'wet'
-    else:
-	print('Soil dry')
-	soil = 'dry'
 
     # Attempt to get sensor reading.
     humidity, temp = Adafruit_DHT.read(DHT_TYPE, DHT_PIN)
